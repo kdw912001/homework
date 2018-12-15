@@ -75,12 +75,10 @@ public class MyNote {
 				bw.write(sb.toString());
 				System.out.println(fileName+" 파일의 내용이 변경되었습니다.");
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }
 
 

@@ -6,8 +6,6 @@ public class TestMyNote {
 	private static Scanner sc = new Scanner(System.in);
 	public static void main(String[] args) {
 		menu();
-		
-
 	}
 	public static void menu() {
 		MyNote mn = new MyNote();
