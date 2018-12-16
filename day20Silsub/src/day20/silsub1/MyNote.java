@@ -14,8 +14,8 @@ public class MyNote {
 			sb.append(line);
 		}
 		System.out.print("저장하시겠습니까?(y/n) : ");
-		char ch = ' ';
-		if((ch = sc.next().toUpperCase().charAt(0))=='Y') {
+		
+		if((sc.next().toUpperCase().charAt(0))=='Y') {
 			System.out.print("저장할 파일명 : ");
 			String fileName = sc.next();
 			
