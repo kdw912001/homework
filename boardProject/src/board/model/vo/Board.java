@@ -77,7 +77,7 @@ public class Board implements Serializable{
 	}
 	
 	public String toString() {
-		return this.boardNo+" "+this.boardTitle+" "+this.boardWriter+" "+this.boardDate+" "+this.boardContent+" "+this.readCount;
+		return "글 번호 : "+this.boardNo+" 글제목 : "+this.boardTitle+" 글쓴이 : "+this.boardWriter+" 현재시간 : "+this.boardDate+" 조회수 : "+this.readCount+"\n "+this.boardContent;
 	}
 	
 }
