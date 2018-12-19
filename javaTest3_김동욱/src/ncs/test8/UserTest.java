@@ -20,16 +20,14 @@ public class UserTest {
 		}
 		
 		System.out.println("copyUsers-----------------------------");
-		/*for(int i=0; i<copyUsers.length;i++) {
-			System.out.println(copyUsers[i].toString());
-		}*/
+	
 		for(User u:copyUsers) {
-			System.out.println(u.toString());
+			System.out.println(u);
 		}
 		
 		System.out.println("비교결과------------------------------------");
 		for(int i=0; i<users.length;i++) {
-			System.out.println(users[i]==copyUsers[i]);
+			System.out.println(users[i].equals(copyUsers[i]));
 		}
 		
 	}

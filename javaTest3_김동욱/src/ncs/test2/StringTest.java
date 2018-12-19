@@ -9,10 +9,15 @@ public class StringTest {
 		
 		String[] st = str.split(",");
 		
-		
-		for(String s:st) {
+		int i=0;
+		/*for(String s:st) {
 			double d = Double.parseDouble(s);
 			sum+=d;
+		}*/
+		for(double d:data) {
+			d = Double.parseDouble(st[i]);
+			sum+=d;
+			i++;
 		}
 		System.out.printf("합계 : %.3f\n",sum);
 		System.out.printf("평균 : %.3f\n", sum/st.length);

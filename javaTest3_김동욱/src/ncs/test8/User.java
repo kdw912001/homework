@@ -71,7 +71,11 @@ public class User {
 	public String toString() {
 		return this.id+" "+this.password+" "+this.name+" "+this.age+" "+this.gender+" "+this.phone;
 	}
-	public Object clone() {
-		return this;
+	public Object clone() {	
+		return new User(this.id,this.password,this.name,this.age,this.gender,this.phone);
+	}
+	public boolean equals(Object obj) {
+		User other = (User)obj;
+		return (this.id.equals(other.id)&&this.password.equals(other.password)&&this.name.equals(other.name)&&this.age==other.age&&this.gender==other.gender&&this.phone.equals(other.phone));
 	}
 }
