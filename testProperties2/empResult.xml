@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>보너스 연봉</comment>
+<entry key="20130416">20130416 김동욱 개발부 42000000 0.4</entry>
+<entry key="20130415">20130415 박길동 영업부 44800000 0.4</entry>
+<entry key="20130414">20130414 이길동 운영부 42900000 0.3</entry>
+<entry key="20130413">20130413 김길동 개발부 42900000 0.1</entry>
+<entry key="20130412">20130412 홍길동 기획부 45600000 0.2</entry>
+</properties>
