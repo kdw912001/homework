@@ -28,7 +28,8 @@ public class PropTest {
 			e.printStackTrace();
 		}
 		Fruit[] f = new Fruit[5];
-		Set<String> keys = p.stringPropertyNames();
+		//내 방식
+		/*Set<String> keys = p.stringPropertyNames();
 		Iterator<String> keyIter = keys.iterator();
 		int index=0;
 		String[] keyStore = new String[5];
@@ -59,8 +60,34 @@ public class PropTest {
 		}
 		for(int i=0; i<f.length;i++) {
 			System.out.println(keyStore[i]+" = "+f[i].toString());
-		}
+		}*/
 		
+		//treemap
+		/*Map<String,String> map = new TreeMap(p);
+		for (String key : map.keySet()) {
+	        System.out.println(key + "=" + map.get(key));
+	    }*/
+		//treemap ,foreach문 사용
+		/*Map<String,String> map = new TreeMap(p);
+		int count=0;
+		for (String key : map.keySet()) {
+			String[] str = map.get(key).split(",");
+	        
+			f[count]=new Fruit(str[0],Integer.valueOf(str[1]),Integer.valueOf(str[2]));
+			System.out.println(key+" = "+f[count]);
+			count++;
+		}*/
+		
+		//우리가 쓰던 방식
+		Map<String,String>map = new TreeMap(p);
+		Set<String>keys = map.keySet();
+		Iterator<String> keyIter = keys.iterator();
+		for(int i=0; keyIter.hasNext();i++) {
+			String key = keyIter.next();
+			String[] value = map.get(key).split(",");
+			f[i] = new Fruit(value[0],Integer.valueOf(value[1]),Integer.valueOf(value[2]));
+			System.out.println(key+"="+f[i]);
+		}
 	}
 
 }
