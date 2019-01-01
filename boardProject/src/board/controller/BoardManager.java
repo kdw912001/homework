@@ -11,7 +11,7 @@ public class BoardManager {
 	
 	public BoardManager() {
 		//board_list.dat 파일의 내용을 읽어서list에 저장함  null 될 때까지 저장함
-		Board[] bo = new Board[100];
+		//Board[] bo = new Board[100];
 		//int count=0;
 		try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream("board_list.dat"))){
 			//objIn.readObject();
