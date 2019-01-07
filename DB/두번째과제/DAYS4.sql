@@ -52,7 +52,7 @@ FROM EMPLOYEE;
 --   단, 부서코드가 50, 60, 90 인 직원의 정보만 조회함
 --  => case 사용
 ----	부서코드 기준 오름차순 정렬함.
-SELECT EMP_NAME,--*조회가 안됨. 나만 이럼??
+SELECT EMP_NAME,
         CASE DEPT_ID 
         WHEN '50' THEN '총무부' 
         WHEN '60' THEN '기획부'
