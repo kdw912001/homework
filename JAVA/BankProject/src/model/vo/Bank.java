@@ -1,7 +1,8 @@
 package model.vo;
 import java.util.*;
 public class Bank {
-	//private int bNo; //통장고유번호 key값
+	//private int bNo; //통장고유번호 key값 
+					//BankController.java에 선언함 
 	private String username;
 	private char gender;
 	private int age;
