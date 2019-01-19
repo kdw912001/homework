@@ -13,6 +13,9 @@ public class Menu {//Properties 저장
 	private String no;
 	{
 		System.out.print("본인의 카드, 통장 고유번호를 입력 : ");
+		//ATM 기기나 은행 창구로 가면 카드나 통장을 건내므로 
+		//고유 번호로 그것을 대신함.
+		//controller에서는 기능만 수행하기 위해 view에서 입력받음.
 		no = sc.next();
 	}
 	BankController bc = new BankController(no);

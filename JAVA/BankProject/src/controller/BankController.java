@@ -92,7 +92,9 @@ public class BankController {
 	}
 	
 	public Properties bankDeposit(String no, int p) {//String number, String name, int p) {
-		//allInfo 에서 계좌번호와 이름을 찾고 해당 키값의 xml에 입금 시킴
+		//allInfo 해당 키값의 xml에 입금 시킴
+		//여러번 수정 결과 no.xml을 로드한 properties에
+		//거래번호+1, 입금할돈 더하면 될듯(price+p)
 		Set<String> keys = allInfo.stringPropertyNames();
 		Iterator<String> keyIter = keys.iterator();
 		//Properties depositProp = new Properties();
@@ -113,7 +115,7 @@ public class BankController {
 				
 				//depositProp.setProperty(key, b.toString());
 				individualInfo.setProperty(key, b.toString());
-				//key가 중복되기 때문에 값이 추가가 안 됨.
+				//key가 중복되기 때문에 행으로 추가가 안 됨.
 				//각각 개인 통장 key는 거래순서로 해야 할듯.
 				//예를 들어
 				//1. 계좌생성
@@ -121,7 +123,6 @@ public class BankController {
 				try {
 					individualInfo.storeToXML(new FileOutputStream(key+".xml"), "");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
