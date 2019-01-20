@@ -111,31 +111,45 @@ public class Menu {//Properties 저장
 			searchProp.list(System.out);
 	}
 	public void bankDeposit() {
-		System.out.print("조회할 고객정보 번호 입력 : ");
+		System.out.print("입금할 고객정보 번호 입력 : ");
 		String keyword = sc.next();
 		Properties depositProp = bc.bankSearch(keyword);
 		if(depositProp == null) {
 			System.out.println("조회한 고객정보가 없습니다. 메인메뉴로 돌아갑니다.");
 			return;
-		}else {
+		}/*else {
 			try {
 				depositProp.loadFromXML(new FileInputStream(keyword+".xml"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		System.out.print("입금할 돈 : ");
 		int price = sc.nextInt();
 		//Properties depositProp = bc.bankDeposit(number,name,price);
-		depositProp = bc.bankDeposit(depositProp,price);
+		depositProp = bc.bankDeposit(keyword,price);
 		if(depositProp.isEmpty()) 
 			System.out.println("계좌가 없거나 고객정보가 잘못 되었습니다. 메인메뉴로 돌아갑니다.");
 		else
 			depositProp.list(System.out);
 	}
 	public void bankWithdraw() {
-		
+		System.out.println("출금할 고객정보 입력 : ");
+		String keyword = sc.next();
+		Properties withdrawProp = bc.bankSearch(keyword);
+		if(withdrawProp == null) {
+			System.out.println("조회한 고객정보가 없습니다.");
+			return;
+		}
+		System.out.print("출금할 돈 : ");
+		int price = sc.nextInt();
+		withdrawProp = bc.bankWithdraw(keyword, price);
+		if(withdrawProp.isEmpty())
+			System.out.println("계좌가 없거나 고객정보가 잘못 되었습니다.");
+		else
+			withdrawProp.list(System.out);
+		//list로 출력하기 보다는 입금이나 출금 완료되었습니다. 멘트만 나오면 될듯
 	}
 	public void bankAccTransfer() {
 		
@@ -148,7 +162,9 @@ public class Menu {//Properties 저장
 	}
 	
 	public void customerMenu() {
-		
+		while(true) {
+			System.out.println("========사용자 메뉴======");
+		}
 	}
 	
 }
