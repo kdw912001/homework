@@ -9,7 +9,7 @@ public class Bank {
 	private int age;
 	private String bNumber;
 	private int price;
-	private Date openDate;
+	private Date openDate = new GregorianCalendar().getTime();
 	
 	public Bank() {
 	}

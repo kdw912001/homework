@@ -58,7 +58,7 @@ public class BankController {
 		allInfo.setProperty(String.valueOf(bNo), b.toString());
 		//customerInfo.setProperty(String.valueOf(bNo), b.toString());
 		customerInfo.setProperty("0", b.toString());//처음고객정보
-		customerInfo.setProperty("1", b.getOpenDate()+","+b.getUsername()+","+b.getPrice()+"원 입금");
+		customerInfo.setProperty("1", b.getOpenDate()+","+b.getUsername()+","+b.getPrice()+"원 입금 남은돈 : "+b.getPrice());
 		//customerInfo 각각 xml 파일 저장시
 		//customerInfo를 이뤄야 할 것
 		//key : 거래순서나 시간? search를 하기 위해선 
@@ -149,19 +149,31 @@ public class BankController {
 			int price = 0;
 			Set<String>keys = individualInfo.stringPropertyNames();
 			Iterator<String>keyIter = keys.iterator();
-			for(int i=0; keyIter.hasNext();i++) {
+			for(int i=0; keyIter.hasNext();i++) {//0부터하면 처음 입력한 개인정보가 나옴.
 				key = keyIter.next();
+				System.out.println("1.확인"+key);
+				if(key.equals("0")) {
+					continue;
+				}
+				System.out.println("확인"+key);
 				String value = individualInfo.getProperty(key);
 				String[] info = value.split(",");
+				
 				String[] pp = info[2].split("원");
 				//원 입금이라는 단어 때문에 원으로 한번더 split
 				price = Integer.parseInt(pp[0]);
-				
 			}
 			Bank b = new Bank();
-			b.setPrice(price+p);
-			individualInfo.setProperty(String.valueOf((Integer.valueOf(key)+1)),
-					b.getOpenDate()+","+b.getUsername()+","+b.getPrice()+"원 입금");
+			
+			b.setUsername("");//자기자신이 입금하는 것이므로 null이 안나오게 빈칸
+			individualInfo.setProperty(String.valueOf((individualInfo.size())),
+				b.getOpenDate()+","+b.getUsername()+","+p+"원 입금 남은 돈 : "+(price+p)+"원");
+			//allInfo 에 남은 돈 업데이트 해줘야할듯???
+			try {
+				individualInfo.storeToXML(new FileOutputStream(key+".xml"), "");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return individualInfo;
 	
 	}

@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
@@ -8,6 +10,38 @@ import java.util.Scanner;
 import controller.BankController;
 import model.vo.Bank;
 
+
+
+/*앞으로 만들 방향
+ * ---관리자메뉴
+1. 통장개설
+2. 통장 전체 조회
+3. 통장 검색 조회
+4. 통장 해지
+
+---사용자메뉴
+1. 입금
+2. 무통장 송금
+3. 출금
+4. 계좌이체
+5. 조회
+
+allInfo
+private String username;
+	private char gender;
+	private int age;
+	private String bNumber;
+	private int price;
+	private Date openDate;
+
+customerInfo
+거래번호(키를 날짜로 해도 될듯)//거래일자
+
+입금/출금/계좌이체
+찾으신 금액/맡기신 금액 --찾으신 금액 맡기신 금액은 합쳐도 될듯+메모
+남은금액
+ * 
+ */
 public class Menu {//Properties 저장
 	private Scanner sc = new Scanner(System.in);
 	/*private String no;
@@ -68,7 +102,7 @@ public class Menu {//Properties 저장
 		allProp.list(System.out);
 	}
 	public void bankSearch() {
-		System.out.print("조회할 번호 : ");
+		System.out.print("조회할 고객정보 번호 입력 : ");
 		String keyword = sc.next();
 		Properties searchProp = bc.bankSearch(keyword);
 		if(searchProp == null) {
@@ -77,19 +111,26 @@ public class Menu {//Properties 저장
 			searchProp.list(System.out);
 	}
 	public void bankDeposit() {
-		System.out.print("조회할 번호 : ");
+		System.out.print("조회할 고객정보 번호 입력 : ");
 		String keyword = sc.next();
 		Properties depositProp = bc.bankSearch(keyword);
 		if(depositProp == null) {
-			System.out.println("조회한 번호가 없습니다. 메인메뉴로 돌아갑니다.");
+			System.out.println("조회한 고객정보가 없습니다. 메인메뉴로 돌아갑니다.");
 			return;
+		}else {
+			try {
+				depositProp.loadFromXML(new FileInputStream(keyword+".xml"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.print("입금할 돈 : ");
 		int price = sc.nextInt();
 		//Properties depositProp = bc.bankDeposit(number,name,price);
 		depositProp = bc.bankDeposit(depositProp,price);
 		if(depositProp.isEmpty()) 
-			System.out.println("계좌번호나 이름이 잘못되었습니다. 메인메뉴로 돌아갑니다.");
+			System.out.println("계좌가 없거나 고객정보가 잘못 되었습니다. 메인메뉴로 돌아갑니다.");
 		else
 			depositProp.list(System.out);
 	}
