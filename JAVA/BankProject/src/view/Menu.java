@@ -10,16 +10,17 @@ import model.vo.Bank;
 
 public class Menu {//Properties 저장
 	private Scanner sc = new Scanner(System.in);
-	private String no;
+	/*private String no;
 	{
 		System.out.print("본인의 카드, 통장 고유번호를 입력 : ");
 		//ATM 기기나 은행 창구로 가면 카드나 통장을 건내므로 
 		//고유 번호로 그것을 대신함.
 		//controller에서는 기능만 수행하기 위해 view에서 입력받음.
 		no = sc.next();
-	}
-	BankController bc = new BankController(no);
+	}*/
 	
+//	BankController bc = new BankController(no);
+	BankController bc = new BankController();
 	public void mainMenu() {
 		while(true) {
 			System.out.println("=======메인메뉴======");
@@ -76,14 +77,17 @@ public class Menu {//Properties 저장
 			searchProp.list(System.out);
 	}
 	public void bankDeposit() {
-		/*System.out.print("계좌번호 입력 : ");
-		String number = sc.next();
-		System.out.print("이름 : ");
-		String name = sc.next();*/
+		System.out.print("조회할 번호 : ");
+		String keyword = sc.next();
+		Properties depositProp = bc.bankSearch(keyword);
+		if(depositProp == null) {
+			System.out.println("조회한 번호가 없습니다. 메인메뉴로 돌아갑니다.");
+			return;
+		}
 		System.out.print("입금할 돈 : ");
 		int price = sc.nextInt();
 		//Properties depositProp = bc.bankDeposit(number,name,price);
-		Properties depositProp = bc.bankDeposit(no,price);
+		depositProp = bc.bankDeposit(depositProp,price);
 		if(depositProp.isEmpty()) 
 			System.out.println("계좌번호나 이름이 잘못되었습니다. 메인메뉴로 돌아갑니다.");
 		else
@@ -96,6 +100,14 @@ public class Menu {//Properties 저장
 		
 	}
 	
+	public void adminMenu() {
+		while(true) {
+			System.out.println("===========관리자 메뉴========");
+		}
+	}
 	
+	public void customerMenu() {
+		
+	}
 	
 }

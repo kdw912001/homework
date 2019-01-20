@@ -1,4 +1,5 @@
 package model.vo;
+import java.text.SimpleDateFormat;
 import java.util.*;
 public class Bank {
 	//private int bNo; //통장고유번호 key값 
@@ -76,8 +77,9 @@ public class Bank {
 	}
 
 
-	public Date getOpenDate() {
-		return openDate;
+	public String getOpenDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd hh:mm:ss");
+		return sdf.format(openDate);
 	}
 
 
@@ -87,7 +89,7 @@ public class Bank {
 
 
 	public String toString() {
-		return this.username+","+this.gender+","+this.age+","+this.bNumber+","+this.price+","+this.openDate;
+		return this.username+","+this.gender+","+this.age+","+this.bNumber+","+this.price+","+this.getOpenDate();
 	}
 	
 }

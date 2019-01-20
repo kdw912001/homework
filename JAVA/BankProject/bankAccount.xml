@@ -2,14 +2,5 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>고객정보</comment>
-<entry key="9">5,5,5,5,5,Sat Jan 19 21:18:19 KST 2019</entry>
-<entry key="8">0,0,0,0,0,Sat Jan 19 21:16:27 KST 2019</entry>
-<entry key="7">9,9,9,9,9,Sat Jan 19 21:16:24 KST 2019</entry>
-<entry key="6">7,7,7,7,7,Sat Jan 19 21:15:02 KST 2019</entry>
-<entry key="5">6,6,6,6,6,Sat Jan 19 21:14:59 KST 2019</entry>
-<entry key="4">6,6,6,6,6,Sat Jan 19 21:13:44 KST 2019</entry>
-<entry key="3">5,5,5,5,5,Sat Jan 19 21:13:41 KST 2019</entry>
-<entry key="2">3,3,3,3,3,Sat Jan 19 21:12:55 KST 2019</entry>
-<entry key="1">1,1,1,1,1,Sat Jan 19 19:02:06 KST 2019</entry>
-<entry key="0">2,2,2,2,2,Sat Jan 19 21:12:29 KST 2019</entry>
+<entry key="0">1,1,1,1,1,20190120 06:33:57</entry>
 </properties>
