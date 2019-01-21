@@ -2,9 +2,11 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment/>
-<entry key="4">20190121 04:33:53,,1000원 출금 남은 돈 : 4000원</entry>
-<entry key="3">20190121 04:33:22,,1000원 입금 남은 돈 : 6000원</entry>
-<entry key="2">20190121 02:24:10,,5000원 입금 남은 돈 : 10000원</entry>
-<entry key="1">20190121 02:23:40,lee,5000원 입금 남은돈 :5000</entry>
-<entry key="0">lee,l,0,000,5000,20190121 02:23:40</entry>
+<entry key="6">20190121 06:56:03,,7000원 입금,남은금액:13000원</entry>
+<entry key="5">20190121 06:55:58,,6000원 입금,남은금액:11000원</entry>
+<entry key="4">20190121 06:55:04,,5000원 출금,남은금액:1000원</entry>
+<entry key="3">20190121 06:52:57,,6000원 입금,남은금액:11000원</entry>
+<entry key="2">20190121 06:52:52,,5000원 입금,남은금액:6000원</entry>
+<entry key="1">20190121 06:52:49,kim,1000원 입금,남은돈:1000원</entry>
+<entry key="0">kim,000</entry>
 </properties>

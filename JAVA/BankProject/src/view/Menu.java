@@ -135,7 +135,7 @@ public class Menu {//Properties 저장
 			depositProp.list(System.out);
 	}
 	public void bankWithdraw() {
-		System.out.println("출금할 고객정보 입력 : ");
+		System.out.print("출금할 고객정보 입력 : ");
 		String keyword = sc.next();
 		Properties withdrawProp = bc.bankSearch(keyword);
 		if(withdrawProp == null) {
@@ -152,6 +152,28 @@ public class Menu {//Properties 저장
 		//list로 출력하기 보다는 입금이나 출금 완료되었습니다. 멘트만 나오면 될듯
 	}
 	public void bankAccTransfer() {
+		System.out.println("본인의 정보 입력 : ");//카드나 통장을 넣는 것
+		String keyword = sc.next();
+		Properties transferProp = bc.bankSearch(keyword);
+		if(transferProp == null) {
+			System.out.println("조회한 고객정보가 없습니다. 처음으로 돌아갑니다.");
+			return;
+		}
+		System.out.print("계좌이체할 상대방 계좌번호 입력 : ");
+		String keywordNo = sc.next();
+		Properties transferProp2 = bc.bankSearch(keywordNo);
+		if(transferProp2 == null) {
+			System.out.println("상대 계좌가 존재하지 않습니다. 처음으로 돌아갑니다.");
+			return;
+		}
+		System.out.println("계좌이체할 금액입력 : ");
+		int price = sc.nextInt();
+		transferProp = bc.bankAcctransfer(keyword, keywordNo, price);
+		if(transferProp.isEmpty()) {
+			System.out.println("계좌가 없거나 고객정보가 잘못 되었습니다. 메인메뉴로 돌아갑니다.");
+		}else {
+			transferProp.list(System.out);
+		}
 		
 	}
 	
