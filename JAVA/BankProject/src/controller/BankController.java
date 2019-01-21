@@ -167,8 +167,8 @@ public class BankController {
 		}*/
 		String value = individualInfo.getProperty(String.valueOf(individualInfo.size()-1));
 		String [] info = value.split(",");
-		String[] pp = info[2].split("원");
-		price = Integer.parseInt(pp[0]);
+		String[] pp = info[3].split(":|원");
+		price = Integer.parseInt(pp[1]);
 		Bank b = new Bank();
 		
 		b.setUsername("");// 자기자신이 입금하는 것이므로 null이 안나오게 빈칸
@@ -224,10 +224,9 @@ public class BankController {
 		return individualInfo;*/
 		
 		String value = individualInfo.getProperty(String.valueOf(individualInfo.size()-1));
-		System.out.println((individualInfo.size()-1)+"value 확인용 : "+value);
 		String [] info = value.split(",");
-		String[] pp = info[2].split("원");
-		price = Integer.parseInt(pp[0]);
+		String[] pp = info[3].split(":|원");
+		price = Integer.parseInt(pp[1]);
 		Bank b = new Bank();
 		
 		b.setUsername("");// 자기자신이 입금하는 것이므로 null이 안나오게 빈칸
@@ -244,7 +243,13 @@ public class BankController {
 		
 		return individualInfo;
 	}
-
+	
+	public Properties bankExist(String keywordNO) {
+		//계좌를 입력받아 bankAccount.xml에 있는지 확인 후
+		//존재 유무를 return
+		return null;
+	}
+	
 	public Properties bankAcctransfer(String keyword, String keywordNo, int p) {
 		// menu에서 본인의 정보를 입력받고
 		// 상대의 계좌번호, 금액을 입력받고
@@ -262,25 +267,73 @@ public class BankController {
 		//bankAccount.xml에서 계좌번호에 해당하는 키 값을 알아야 함.
 		//bankAccount.xml을 load하기 위한 Properties 선언
 		Properties bankAccount = new Properties();
-		bankAccount.loadFromXML(new FileInputStream("bankAccount.xml"));
 		
 		try {
+			bankAccount.loadFromXML(new FileInputStream("bankAccount.xml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		Set<String> keys = bankAccount.stringPropertyNames();
+		Iterator<String> keyIter = keys.iterator();
+		String bankKey = "";
+		String[] bankInfo = new String[10];
+		String myName = "";
+		String oppositeKey = "";
+		String oppositeName = "";
+		while(keyIter.hasNext()) {
+			bankKey = keyIter.next();
+			String bankValue = bankAccount.getProperty(bankKey);
+			bankInfo = bankValue.split(",");
+			if(bankKey.equals(keyword)) {
+				myName = bankInfo[0];
+			}
+			if(bankInfo[3].equals(keywordNo)) {
+				/*break;
+				//계좌번호가 같으면 그때 break를 걸어 그때의 bankKey를 획득
+			*/	oppositeKey = bankKey;
+				oppositeName = bankInfo[0];
+			}
+		}
+		
+		//본인 계좌, 상대방 계좌정보를 load
+		try {
 			myProp.loadFromXML(new FileInputStream(keyword+".xml"));
-			oppositeProp.loadFromXML(new FileInputStream(keywordNo+".xml"));
+			oppositeProp.loadFromXML(new FileInputStream(oppositeKey+".xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		//본인 계좌에서 p만큼 금액 감소
-		String value = myProp.getProperty(String.valueOf(myProp.size()-1));
-		String[] info = value.split(",");
-		String[] pp = info[2].split("원");
-		int price = Integer.parseInt(pp[0]);
+		String myValue = myProp.getProperty(String.valueOf(myProp.size()-1));
+		String[] myInfo = myValue.split(",");
+		String[] myPriceArr = myInfo[3].split(":|원");
+		int myPrice = Integer.parseInt(myPriceArr[1]);
 		Bank b = new Bank();
-		//상대방 이름을 넣어야 하기 때문에 setProperties는 나중에
+		
+		//내 계좌정보에 상대방 이름을 넣어야 하기 때문에 setProperties는 나중에
+		//상대 이름을 따오기 위해 bankAccount에서 가져올 지 
+		//직접 상대방 파일에서 따와야 할지 고민해야 하지만
+		//bankAccount에서 getProperties를 하기 때문에
+		//위에서 bankInfo[0]을 가져오는걸로
+		String date = b.getOpenDate();//내 통장과 상대방 통장에 동일한 시간이 나오게 하기 위해
+		myProp.setProperty(String.valueOf((myProp.size())),
+				date + "," + oppositeName + "," + p + "원 계좌이체,남은금액:" + (myPrice - p) + "원");
+		
 		
 		//상대방 계좌에서 p만큼 증가 --계좌번호 처리 해야 함.
+		//상대방계좌에서는 본인의 이름이 나와야 함
+		String oppositeValue = oppositeProp.getProperty(String.valueOf(oppositeProp.size()-1));
+		String[] oppositeInfo = oppositeValue.split(",");
+		String[] oppositePriceArr = oppositeInfo[2].split("원");
+		int oppositePrice = Integer.parseInt(oppositePriceArr[0]);
 		
+		//본인 계좌에서 name 따오기->위에 while문에서 따옴
+		
+		
+		
+		oppositeProp.setProperty(String.valueOf((myProp.size())),
+				date + "," + myName + "," + p + "원 입금,남은금액:" + (oppositePrice + p) + "원");
 		
 		
 		return myProp;

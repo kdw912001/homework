@@ -2,5 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>고객정보</comment>
-<entry key="0">kim,m,29,000,1000,20190121 06:52:49</entry>
+<entry key="1">lee,m,29,001,5000,20190122 04:47:37</entry>
+<entry key="0">kim,m,29,000,1000,20190122 04:46:15</entry>
 </properties>
