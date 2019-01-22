@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>고객정보</comment>
-<entry key="1">lee,m,29,001,5000,20190122 04:47:37</entry>
-<entry key="0">kim,m,29,000,1000,20190122 04:46:15</entry>
+<comment/>
+<entry key="1">LEE,M,29,001,44000,20190122 07:25:10</entry>
+<entry key="0">KIM,M,29,000,9000,20190122 07:24:24</entry>
 </properties>

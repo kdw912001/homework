@@ -99,33 +99,6 @@ public class BankController {
 		// 여러번 수정 결과 no.xml을 로드한 properties에
 		// 거래번호+1, 입금할돈 더하면 될듯(price+p)
 
-		/*
-		 * Set<String> keys = allInfo.stringPropertyNames(); Iterator<String> keyIter =
-		 * keys.iterator(); //Properties depositProp = new Properties(); for(int i = 0;
-		 * keyIter.hasNext(); i++) { String key = keyIter.next(); String value =
-		 * allInfo.getProperty(key); String[] info = value.split(","); String username =
-		 * info[0]; char gender = info[1].charAt(0); int age =
-		 * Integer.parseInt(info[2]); String bNumber = info[3]; int price =
-		 * Integer.parseInt(info[4]); Date deposit = new GregorianCalendar().getTime();
-		 * 
-		 * // if(bNumber.contains(number) && username.contains(name)) {
-		 * if(number.equals(key)) { Bank b = new
-		 * Bank(username,gender,age,bNumber,price+p,deposit);
-		 * 
-		 * 
-		 * 
-		 * //depositProp.setProperty(key, b.toString());
-		 * individualInfo.setProperty(String.valueOf((Integer.valueOf(key)+1)),
-		 * b.getOpenDate()+", "+b.getUsername()+", "+b.getPrice()+"원 입금"); //key가 중복되기
-		 * 때문에 행으로 추가가 안 됨. //각각 개인 통장 key는 거래순서로 해야 할듯. //예를 들어 //1. 계좌생성 //2. 입금 ....
-		 * 등등... try { individualInfo.storeToXML(new FileOutputStream(key+".xml"), "");
-		 * } catch (IOException e) { e.printStackTrace(); }
-		 * 
-		 * } } return individualInfo;
-		 */
-
-		// 해당 no의 no.xml을 불러와서 individualInfo에 저장
-		// individualInfo.setproperties(key+1,나머지) 하면 될듯
 		Properties individualInfo = new Properties();
 		try {
 			individualInfo.loadFromXML(new FileInputStream(keyword + ".xml"));
@@ -134,51 +107,36 @@ public class BankController {
 			e.printStackTrace();
 		}
 		
-		//String key = "";
-		// bankSearch(key);
-		int price = 0;
-		/*Set<String> keys = individualInfo.stringPropertyNames();
-		Iterator<String> keyIter = keys.iterator();
-		for (int i = 0; keyIter.hasNext(); i++) {// 0부터하면 처음 입력한 개인정보가 나옴.
-			key = keyIter.next();
-			if (key.equals("0")) {
-				// 키가 0일 때는 통장의 고객정보를 담고 있어 split이 이상해지기 때문에 continue
-				continue;
-			}
-			String value = individualInfo.getProperty(key);
-			String[] info = value.split(",");
-
-			System.out.println("확인용 : " + info[2]);
-			System.out.println("키 확인용 : " + key);
-			System.out.println("사이즈 확인용 : " + individualInfo.size());
-			String[] pp = info[2].split("원");
-			// 남은 돈 때문에 다시 계산해야 함.
-			// 원 입금이라는 단어 때문에 원으로 한번더 split
-			price = Integer.parseInt(pp[0]);
-
-			// .XML파일에는 숫자 순서대로 입력되는 것이 아니기 때문에
-			// 총 금액을 계산하기 위한 돈에서 자꾸 삑이 남
-			// KEY에서 가장 숫자가 높은(거래순서가 제일 마지막) 인것을 찾아야 함
-			// individualInfo.size()-1이 현재 저장된 것 중 제일 마지막
-			
-			 * for(int j=0; j<individualInfo.size()-1;j++) { key = keyIter.next();
-			 * if(key.equals(String.valueOf(j))) { continue; } }
-			 
-		}*/
-		String value = individualInfo.getProperty(String.valueOf(individualInfo.size()-1));
-		String [] info = value.split(",");
-		String[] pp = info[3].split(":|원");
-		price = Integer.parseInt(pp[1]);
+		
+		int myPrice = 0;
+		
+		String myValue = individualInfo.getProperty(String.valueOf(individualInfo.size()-1));
+		String [] myInfo = myValue.split(",");
+		String[] pp = myInfo[3].split(":|원");
+		myPrice = Integer.parseInt(pp[1]);
 		Bank b = new Bank();
 		
 		b.setUsername("");// 자기자신이 입금하는 것이므로 null이 안나오게 빈칸
-		individualInfo.setProperty(String.valueOf((individualInfo.size())),
-				b.getOpenDate() + "," + b.getUsername() + "," + p + "원 입금,남은금액:" + (price + p) + "원");
-		//individualInfo.setProperty("","");
+		individualInfo.setProperty(String.valueOf(individualInfo.size()),
+				b.getOpenDate() + "," + b.getUsername() + "," + p + "원 입금,남은금액:" + (myPrice + p) + "원");
 		// allInfo 에 남은 돈 업데이트 해줘야할듯???
+		Set<String> keys = allInfo.stringPropertyNames();
+		Iterator<String> keyIter = keys.iterator();
+		for(int i=0; keyIter.hasNext();i++) {
+			String key = keyIter.next();
+			String value = allInfo.getProperty(key);
+			String[] values = value.split(",");
+			
+			if(key.equals(keyword)) {
+				allInfo.setProperty(keyword,values[0]+","+values[1]+","
+			+values[2]+","+values[3]+","+(myPrice + p)+","+values[5]);
+			}
+		}
+		
 		
 		try {
 			individualInfo.storeToXML(new FileOutputStream(keyword + ".xml"), "");
+			allInfo.storeToXML(new FileOutputStream("bankAccount.xml"), "");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -195,48 +153,36 @@ public class BankController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//String key = "";
-		int price = 0;
-
-		/*Set<String> keys = individualInfo.stringPropertyNames();
+		
+		int myPrice = 0;
+			
+		String myValue = individualInfo.getProperty(String.valueOf(individualInfo.size()-1));
+		String [] myInfo = myValue.split(",");
+		String[] pp = myInfo[3].split(":|원");
+		myPrice = Integer.parseInt(pp[1]);
+		Bank b = new Bank();
+		
+		b.setUsername("");// 자기자신이 입금하는 것이므로 null이 안나오게 빈칸
+		individualInfo.setProperty(String.valueOf((individualInfo.size())),
+				b.getOpenDate() + "," + b.getUsername() + "," + p + "원 출금,남은금액:" + (myPrice - p) + "원");
+		// allInfo 에 남은 돈 업데이트 해줘야할듯???
+		Set<String> keys = allInfo.stringPropertyNames();
 		Iterator<String> keyIter = keys.iterator();
-		for (int i = 0; keyIter.hasNext(); i++) {
-			key = keyIter.next();
-			if (key.equals("0")) {
-				continue;
+		for(int i=0; keyIter.hasNext();i++) {
+			String key = keyIter.next();
+			String value = allInfo.getProperty(key);
+			String[] values = value.split(",");
+			
+			if(key.equals(keyword)) {
+				allInfo.setProperty(keyword,values[0]+","+values[1]+","
+			+values[2]+","+values[3]+","+(myPrice - p)+","+values[5]);
 			}
-			String value = individualInfo.getProperty(key);
-			String[] info = value.split(",");
-			String[] pp = info[2].split("원");
-			price = Integer.valueOf(pp[0]);
-		}
-		Bank b = new Bank();
-		b.setUsername("");// 자기자신이 입금하는 것이므로 null이 안나오게 빈칸
-		individualInfo.setProperty(String.valueOf((individualInfo.size())),
-				b.getOpenDate() + "," + b.getUsername() + "," + p + "원 출금,남은 돈:" + (price - p) + "원");
-		// allInfo 에 남은 돈 업데이트 해줘야할듯???
-		try {
-			individualInfo.storeToXML(new FileOutputStream(key + ".xml"), "");
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		
-		return individualInfo;*/
-		
-		String value = individualInfo.getProperty(String.valueOf(individualInfo.size()-1));
-		String [] info = value.split(",");
-		String[] pp = info[3].split(":|원");
-		price = Integer.parseInt(pp[1]);
-		Bank b = new Bank();
-		
-		b.setUsername("");// 자기자신이 입금하는 것이므로 null이 안나오게 빈칸
-		individualInfo.setProperty(String.valueOf((individualInfo.size())),
-				b.getOpenDate() + "," + b.getUsername() + "," + p + "원 출금,남은금액:" + (price - p) + "원");
-		//individualInfo.setProperty("","");
-		// allInfo 에 남은 돈 업데이트 해줘야할듯???
 		
 		try {
 			individualInfo.storeToXML(new FileOutputStream(keyword + ".xml"), "");
+			allInfo.storeToXML(new FileOutputStream("bankAccount.xml"), "");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -244,10 +190,27 @@ public class BankController {
 		return individualInfo;
 	}
 	
-	public Properties bankExist(String keywordNO) {
+	public Properties bankExist(String keywordNo) {
 		//계좌를 입력받아 bankAccount.xml에 있는지 확인 후
 		//존재 유무를 return
-		return null;
+		Set<String> keys = allInfo.stringPropertyNames();
+		Iterator<String> keyIter = keys.iterator();
+		String key ="";
+		while(keyIter.hasNext()) {
+			key = keyIter.next();
+			String value = allInfo.getProperty(key);
+			String[] values = value.split(",");
+			if(values[3].equals(keywordNo)) {
+				break;
+			}
+		}
+		Properties existProp = new Properties();
+		try {
+			existProp.loadFromXML(new FileInputStream(key+".xml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return existProp;
 	}
 	
 	public Properties bankAcctransfer(String keyword, String keywordNo, int p) {
@@ -287,12 +250,14 @@ public class BankController {
 			bankInfo = bankValue.split(",");
 			if(bankKey.equals(keyword)) {
 				myName = bankInfo[0];
+				//myInfoArr = bankInfo;
 			}
 			if(bankInfo[3].equals(keywordNo)) {
 				/*break;
 				//계좌번호가 같으면 그때 break를 걸어 그때의 bankKey를 획득
 			*/	oppositeKey = bankKey;
 				oppositeName = bankInfo[0];
+				//oppositeInfoArr = bankInfo;
 			}
 		}
 		
@@ -325,18 +290,44 @@ public class BankController {
 		//상대방계좌에서는 본인의 이름이 나와야 함
 		String oppositeValue = oppositeProp.getProperty(String.valueOf(oppositeProp.size()-1));
 		String[] oppositeInfo = oppositeValue.split(",");
-		String[] oppositePriceArr = oppositeInfo[2].split("원");
-		int oppositePrice = Integer.parseInt(oppositePriceArr[0]);
+		String[] oppositePriceArr = oppositeInfo[3].split(":|원");
+		int oppositePrice = Integer.parseInt(oppositePriceArr[1]);
 		
 		//본인 계좌에서 name 따오기->위에 while문에서 따옴
-		
-		
-		
-		oppositeProp.setProperty(String.valueOf((myProp.size())),
+				
+		oppositeProp.setProperty(String.valueOf((oppositeProp.size())),
 				date + "," + myName + "," + p + "원 입금,남은금액:" + (oppositePrice + p) + "원");
 		
+		while(keyIter.hasNext()) {
+			bankKey = keyIter.next();
+			String bankValue = bankAccount.getProperty(bankKey);
+			bankInfo = bankValue.split(",");
+			if(bankKey.equals(keyword)) {
+				allInfo.setProperty(keyword,bankInfo[0]+","+bankInfo[1]+","
+						+bankInfo[2]+","+bankInfo[3]+","+(myPrice - p)+","+bankInfo[5]);
+			}
+			if(bankInfo[3].equals(keywordNo)) {
+				allInfo.setProperty(keyword,bankInfo[0]+","+bankInfo[1]+","
+						+bankInfo[2]+","+bankInfo[3]+","+(myPrice + p)+","+bankInfo[5]);
+
+			}
+		}
+		
+		
+		try {
+			myProp.storeToXML(new FileOutputStream(keyword+".xml"), "");
+			oppositeProp.storeToXML(new FileOutputStream(oppositeKey+".xml"), "");
+			allInfo.storeToXML(new FileOutputStream("bankAccount.xml"), "");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return myProp;
 	}
 
 }
+
+//ALLINFO에서 해당 KEY값의 PRICE를 변화 시켜야 함.
+//키 값 순번대로 나오게  제일 위에는 이름 생성날짜, 게좌이름
+//그리고 거래순서, 시간, 거래종, 금액, 남은금액
+//계좌번호 INSERT시 계좌번호가 자동 입력되게 구현해야 함.

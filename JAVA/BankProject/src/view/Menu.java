@@ -152,7 +152,7 @@ public class Menu {//Properties 저장
 		//list로 출력하기 보다는 입금이나 출금 완료되었습니다. 멘트만 나오면 될듯
 	}
 	public void bankAccTransfer() {
-		System.out.println("본인의 정보 입력 : ");//카드나 통장을 넣는 것
+		System.out.print("본인의 정보 입력 : ");//카드나 통장을 넣는 것
 		String keyword = sc.next();
 		Properties transferProp = bc.bankSearch(keyword);
 		if(transferProp == null) {
@@ -161,7 +161,7 @@ public class Menu {//Properties 저장
 		}
 		System.out.print("계좌이체할 상대방 계좌번호 입력 : ");
 		String keywordNo = sc.next();
-		Properties transferProp2 = bc.bankSearch(keywordNo);
+		Properties transferProp2 = bc.bankExist(keywordNo);
 		if(transferProp2 == null) {
 			System.out.println("상대 계좌가 존재하지 않습니다. 처음으로 돌아갑니다.");
 			return;
