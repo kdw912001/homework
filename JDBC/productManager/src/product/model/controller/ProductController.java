@@ -14,13 +14,13 @@ public class ProductController {
 		try {
 			pservice = new ProductService();
 		} catch (ProductException e) {
-			productError(e.getMessage());		
+			printError(e.getMessage());		
 			new ProductView().displayMenu();
 		}
 	}
 	
 
-	public void productError(String message) {
+	public void printError(String message) {
 		System.out.println("\n프로그램 오류발생!");
 		System.out.println("시스템 관리자에게 문의하십시오.");
 		System.out.println("오류 메시지 : " + message);
@@ -33,7 +33,7 @@ public class ProductController {
 			if (productList.size() > 0)
 				System.out.println("\n전체조회 성공!");
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 		return productList;
 	}
@@ -43,7 +43,7 @@ public class ProductController {
 			if(pservice.insertProduct(product) > 0);
 				System.out.println("\n새 제품 등록 성공!");
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 		return product;
 	}
@@ -53,7 +53,7 @@ public class ProductController {
 			if(pservice.updateProduct(product) > 0)
 				System.out.println("\n제품 가격 변경 성공!");
 		} catch (Exception e) {
-			productError(e.getMessage());	
+			printError(e.getMessage());	
 		}
 
 	}
@@ -63,7 +63,7 @@ public class ProductController {
 			if(pservice.deleteProduct(productId) > 0)
 				System.out.println("\n제품 정보 삭제 성공!");
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 
 	}
@@ -75,7 +75,7 @@ public class ProductController {
 			if (productList.size() > 0)
 				System.out.println("\n전체조회 성공!");
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 		return productList;		
 	}
@@ -86,7 +86,7 @@ public class ProductController {
 		try {
 			product = pservice.selectProductId(productId);
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 		return product;
 	}
@@ -97,7 +97,7 @@ public class ProductController {
 		try {
 			productMap = pservice.selectAllMap();
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 		return productMap;
 	}
@@ -107,7 +107,7 @@ public class ProductController {
 		try {
 			new ProductView().displayMap(pservice.selectNameMap(productName));
 		} catch (Exception e) {
-			productError(e.getMessage());
+			printError(e.getMessage());
 		}
 	}
 
