@@ -45,11 +45,15 @@ public class ProductView {
 		return productId;
 	}
 	public void displayList(ArrayList<Product> productList) {
+		if(productList == null)
+			displayMenu();
 		System.out.println("조회된 제품 갯수 : " + productList.size());
 		for(Product p : productList)
 			System.out.println(p);
 	}
 	public void displayOne(Product p ) {
+		if(p == null)
+			displayMenu();
 		System.out.println(p);
 	}
 	public String inputProductId() {

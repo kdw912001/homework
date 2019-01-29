@@ -154,7 +154,7 @@ public class ProductDao {
 				p.setDescription(rset.getString("DESCRIPTION"));	
 			}
 			if(p == null)
-				System.out.println(productId + "아이디 정보 조회 실패");
+				System.out.println(productId + " 아이디 정보 조회 실패");
 		} catch (Exception e) {
 			throw new ProductException(e.getMessage());
 		} finally {
