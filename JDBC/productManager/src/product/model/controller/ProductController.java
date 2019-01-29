@@ -32,6 +32,7 @@ public class ProductController {
 				System.out.println("\n전체조회 성공!");
 		} catch (Exception e) {
 			productError(e.getMessage());
+			new ProductView().displayMenu();
 		}
 		return productList;
 	}
@@ -42,6 +43,7 @@ public class ProductController {
 				System.out.println("\n새 제품 등록 성공!");
 		} catch (Exception e) {
 			productError(e.getMessage());
+			new ProductView().displayMenu();
 		}
 		return product;
 	}
@@ -52,6 +54,7 @@ public class ProductController {
 				System.out.println("\n제품 가격 변경 성공!");
 		} catch (Exception e) {
 			productError(e.getMessage());			
+			new ProductView().displayMenu();
 		}
 
 	}
@@ -62,6 +65,7 @@ public class ProductController {
 				System.out.println("\n제품 정보 삭제 성공!");
 		} catch (Exception e) {
 			productError(e.getMessage());
+			new ProductView().displayMenu();
 		}
 
 	}
@@ -74,6 +78,7 @@ public class ProductController {
 				System.out.println("\n전체조회 성공!");
 		} catch (Exception e) {
 			productError(e.getMessage());
+			new ProductView().displayMenu();
 		}
 		return productList;		
 	}
@@ -85,6 +90,7 @@ public class ProductController {
 			product = pservice.selectProductId(productId);
 		} catch (Exception e) {
 			productError(e.getMessage());
+			new ProductView().displayMenu();
 		}
 		return product;
 	}

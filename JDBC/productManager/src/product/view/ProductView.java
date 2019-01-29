@@ -25,8 +25,7 @@ public class ProductView {
 			case 1: displayList(pc.selectAllList()); break;
 			case 2: displayOne(pc.selectProductId(pc.insertProduct(inputProduct()).getProductId()));break;
 			case 3: pc.updateProduct(updateInput()); break;
-			case 4: //pc.deleteProduct(displayOne(pc.selectProductId(inputProductId())));break;
-					pc.deleteProduct(deleteProduct(inputProductId())); break;
+			case 4: pc.deleteProduct(deleteProduct(inputProductId())); break;
 			case 5: displayList(pc.selectProductName(inputProductName())); break;
 			case 6: System.out.print("프로그램을 종료 하시겠습니까?[y/n] : ");
 					if(sc.next().toUpperCase().charAt(0) == 'Y')
@@ -46,6 +45,7 @@ public class ProductView {
 		return productId;
 	}
 	public void displayList(ArrayList<Product> productList) {
+		System.out.println("조회된 제품 갯수 : " + productList.size());
 		for(Product p : productList)
 			System.out.println(p);
 	}
