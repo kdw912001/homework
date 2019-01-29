@@ -1,6 +1,7 @@
 package product.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import product.model.controller.ProductController;
@@ -14,12 +15,14 @@ public class ProductView {
 	public void displayMenu() {
 		while(true) {
 			System.out.print(
-					" \n1. 전체 조회\r\n" + 
+					" \n1. 전체 조회 - ArrayList\r\n" + 
 					"2. 추가 : 추가후 id로 조회 확인함\r\n" + 
 					"3. 수정 : id으로 조회 후 가격 수정함\r\n" + 
 					"4. 삭제 : id로 조회 후 삭제함\r\n" + 
-					"5. 검색 : 이름으로 조회함\r\n" + 
+					"5. 검색 : 이름으로 조회함 ArrayList\r\n" + 
 					"6. 끝내기\n"
+					+ "7. 전체 조회 - Map사용\n"
+					+ "8. 이름으로 조회 - Map 사용\n"
 					+ "메뉴 선택 : ");
 			switch(sc.nextInt()) {
 			case 1: displayList(pc.selectAllList()); break;
@@ -31,11 +34,19 @@ public class ProductView {
 					if(sc.next().toUpperCase().charAt(0) == 'Y')
 						return;
 					break;
+			case 7: displayMap(pc.selectAllMap()); break;
+			case 8: pc.selectNameMap(inputProductName()); break;
 			default : System.out.println("\n 잘못 입력하셨습니다.");
 					  System.out.println("다시 입력해주세요.");
 			}
 		}
 	}
+	public void displayMap(HashMap<String,Product> productMap) {
+		System.out.println(productMap.size() + " 개의 제품이 있습니다.");
+		for(String key : productMap.keySet())
+			System.out.println(productMap.get(key));
+	}
+
 	public String deleteProduct(String productId) {
 		displayOne(pc.selectProductId(productId));
 		System.out.print("삭제 하시겠습니까?[y/n] : ");

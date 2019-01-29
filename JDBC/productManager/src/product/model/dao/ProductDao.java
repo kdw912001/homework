@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import product.exception.ProductException;
@@ -109,13 +110,13 @@ public class ProductDao {
 	public ArrayList<Product> selectProductName(Connection conn, String productName) throws ProductException {
 		ArrayList<Product> productList = new ArrayList<>();
 		Product p = null;
-		PreparedStatement rstmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectName");
 		try {
-			rstmt = conn.prepareStatement(query);
-			rstmt.setString(1, "%"+productName+"%");
-			rset = rstmt.executeQuery();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+productName+"%");
+			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				p = new Product();
 				p.setProductId(rset.getString("PRODUCT_ID"));
@@ -130,7 +131,7 @@ public class ProductDao {
 			throw new ProductException(e.getMessage());
 		} finally {
 			close(rset);
-			close(rstmt);
+			close(pstmt);
 		}
 		return productList;
 	}
@@ -139,13 +140,13 @@ public class ProductDao {
 
 	public Product selectProductId(Connection conn, String productId) throws ProductException {
 		Product p = null;
-		PreparedStatement rstmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectId");
 		try {
-			rstmt = conn.prepareStatement(query);
-			rstmt.setString(1, productId);
-			rset = rstmt.executeQuery();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, productId);
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				p = new Product();
 				p.setProductId(rset.getString("PRODUCT_ID"));
@@ -159,9 +160,66 @@ public class ProductDao {
 			throw new ProductException(e.getMessage());
 		} finally {
 			close(rset);
-			close(rstmt);
+			close(pstmt);
 		}
 		return p;
+	}
+
+	public HashMap<String, Product> seletMap(Connection conn) throws ProductException {
+		HashMap<String, Product> productMap = new HashMap<>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectAll");
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductId(rset.getString("PRODUCT_ID"));
+				p.setPname(rset.getString("P_NAME"));
+				p.setPrice(rset.getInt("PRICE"));
+				p.setDescription(rset.getString("DESCRIPTION"));
+				productMap.put(p.getProductId(), p);
+			}
+			if(productMap.size() == 0)
+				System.out.println("조회할 제품 정보가 존재하지 않습니다.");
+		} catch (Exception e) {
+			throw new ProductException(e.getMessage());
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return productMap;
+	}
+
+
+
+	public HashMap<String, Product> selectNameMap(Connection conn, String productName) throws ProductException {
+		HashMap<String, Product> productMap = new HashMap<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectName");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+productName+"%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductId(rset.getString("PRODUCT_ID"));
+				p.setPname(rset.getString("P_NAME"));
+				p.setPrice(rset.getInt("PRICE"));
+				p.setDescription(rset.getString("DESCRIPTION"));
+				productMap.put(p.getProductId(), p);
+			}
+			if(productMap.size() == 0)
+				System.out.println(productName + " 의 이름을 가진 제품이 존재하지 않습니다.");
+		} catch (Exception e) {
+			throw new ProductException(e.getMessage());
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productMap;
 	}
 
 }

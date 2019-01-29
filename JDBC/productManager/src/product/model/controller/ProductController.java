@@ -1,6 +1,7 @@
 package product.model.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import product.exception.ProductException;
 import product.model.dto.Product;
@@ -88,6 +89,26 @@ public class ProductController {
 			productError(e.getMessage());
 		}
 		return product;
+	}
+
+
+	public HashMap<String, Product> selectAllMap() {//employee방식
+		HashMap<String, Product> productMap = new HashMap<>();
+		try {
+			productMap = pservice.selectAllMap();
+		} catch (Exception e) {
+			productError(e.getMessage());
+		}
+		return productMap;
+	}
+
+
+	public void selectNameMap(String productName) {//book방식
+		try {
+			new ProductView().displayMap(pservice.selectNameMap(productName));
+		} catch (Exception e) {
+			productError(e.getMessage());
+		}
 	}
 
 }

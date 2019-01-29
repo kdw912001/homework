@@ -1,6 +1,7 @@
 package product.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.sql.*;
 import static common.JDBCTemplate.*;
 
@@ -60,6 +61,20 @@ public class ProductService {
 		Product product = pdao.selectProductId(conn, productId);
 		close(conn);
 		return product;
+	}
+
+	public HashMap<String, Product> selectAllMap() throws ProductException {
+		Connection conn = getConnection();
+		HashMap<String, Product> productMap = pdao.seletMap(conn);
+		close(conn);
+		
+		return productMap;
+	}
+
+	public HashMap<String, Product> selectNameMap(String productName) throws ProductException {
+		Connection conn = getConnection();
+		HashMap<String, Product> productMap = pdao.selectNameMap(conn, productName);
+		return productMap;
 	}
 
 }
